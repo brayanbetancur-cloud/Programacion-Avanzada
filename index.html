@@ -1,74 +1,458 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plantilla profesional de inicio para desarrollo web en VS Code.">
-    <title>Dashboard Profesional | Mi Empresa</title>
-    
-    <!-- Tipografía Externa (Google Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Estilos Principales -->
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amigos Salvajes · Guía de Animales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --verde-bosque: #2D4A3E;
+    --verde-salvia: #E8EDE1;
+    --crema: #FBF8F2;
+    --miel: #E8A94C;
+    --coral: #F0784F;
+    --tinta: #22301F;
+    --linea: #C9D4BE;
+  }
+ 
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+ 
+  body{
+    margin:0;
+    background:var(--verde-salvia);
+    color:var(--tinta);
+    font-family:'Nunito', sans-serif;
+    line-height:1.6;
+  }
+ 
+  h1,h2,h3, .display{
+    font-family:'Fredoka', sans-serif;
+    color:var(--verde-bosque);
+    margin:0;
+  }
+ 
+  /* ---------- Fondo de huellas ---------- */
+  .huellas{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image: radial-gradient(circle at 2px 2px, rgba(45,74,62,0.05) 2px, transparent 2px);
+    background-size: 34px 34px;
+  }
+ 
+  /* ---------- Header / Nav ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 22px 6%;
+    position:sticky;
+    top:0;
+    background:rgba(251,248,242,0.88);
+    backdrop-filter: blur(6px);
+    z-index:20;
+    border-bottom: 2px dashed var(--linea);
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.3rem; font-weight:600;
+  }
+  .logo span.paw{ font-size:1.4rem; }
+  nav a{
+    color:var(--verde-bosque);
+    text-decoration:none;
+    font-weight:700;
+    margin-left:26px;
+    font-size:0.95rem;
+    border-bottom:2px solid transparent;
+    transition: border-color .2s ease;
+  }
+  nav a:hover, nav a:focus-visible{ border-color: var(--coral); }
+ 
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:1100px;
+    margin:0 auto;
+    padding: 70px 6% 40px;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--crema);
+    border:2px solid var(--linea);
+    padding:6px 14px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.85rem;
+    color:var(--coral);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height:1.08;
+    font-weight:700;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--coral);
+    position:relative;
+  }
+  .hero p.lead{
+    margin-top:18px;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:#3d4a3a;
+  }
+  .hero-cta{
+    margin-top:28px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    padding:13px 26px;
+    border-radius:14px;
+    text-decoration:none;
+    font-size:1rem;
+    display:inline-block;
+    border:2px solid transparent;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primario{
+    background:var(--coral);
+    color:white;
+    box-shadow: 0 6px 0 #c85a37;
+  }
+  .btn-primario:hover{ transform: translateY(-2px); }
+  .btn-primario:active{ transform: translateY(3px); box-shadow: 0 2px 0 #c85a37; }
+  .btn-secundario{
+    background:transparent;
+    color:var(--verde-bosque);
+    border-color:var(--verde-bosque);
+  }
+  .btn-secundario:hover{ background:var(--verde-bosque); color:white; }
+ 
+  .hero-visual{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .medallon{
+    width:290px; height:290px;
+    background: var(--crema);
+    border-radius:50%;
+    border:3px solid var(--verde-bosque);
+    display:flex; align-items:center; justify-content:center;
+    font-size:8rem;
+    position:relative;
+    box-shadow: 0 10px 0 rgba(45,74,62,0.12);
+    animation: flotar 5s ease-in-out infinite;
+  }
+  @keyframes flotar{
+    0%,100%{ transform: translateY(0) rotate(-2deg); }
+    50%{ transform: translateY(-14px) rotate(2deg); }
+  }
+  .chip-flotante{
+    position:absolute;
+    background:white;
+    border:2px solid var(--linea);
+    border-radius:12px;
+    padding:8px 12px;
+    font-size:0.8rem;
+    font-weight:700;
+    color:var(--verde-bosque);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  }
+  .chip-1{ top:6%; left:-6%; }
+  .chip-2{ bottom:10%; right:-10%; }
+ 
+  /* ---------- Separador de huellas ---------- */
+  .rastro{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    padding:10px 0 40px;
+    font-size:1.3rem;
+    opacity:0.5;
+  }
+  .rastro span:nth-child(even){ transform: translateY(10px); }
+ 
+  /* ---------- Sección de datos rápidos ---------- */
+  .franja{
+    background:var(--verde-bosque);
+    color:var(--verde-salvia);
+    padding: 34px 6%;
+  }
+  .franja-inner{
+    max-width:1100px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+    gap:20px;
+    text-align:center;
+  }
+  .franja-inner div strong{
+    display:block;
+    font-family:'Fredoka', sans-serif;
+    font-size:1.8rem;
+    color:var(--miel);
+  }
+  .franja-inner div span{
+    font-size:0.85rem;
+    opacity:0.85;
+  }
+ 
+  /* ---------- Galería de animales ---------- */
+  .seccion{
+    max-width:1160px;
+    margin:0 auto;
+    padding: 70px 6% 30px;
+  }
+  .titulo-seccion{
+    text-align:center;
+    margin-bottom:44px;
+  }
+  .titulo-seccion .eyebrow{ margin-bottom:12px; }
+  .titulo-seccion h2{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  }
+  .titulo-seccion p{
+    max-width:52ch;
+    margin: 12px auto 0;
+    color:#4a5749;
+  }
+ 
+  .grid-animales{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap:26px;
+  }
+ 
+  .tarjeta{
+    background:var(--crema);
+    border:2px solid var(--linea);
+    border-radius:22px;
+    padding:26px;
+    position:relative;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .tarjeta:hover{
+    transform: translateY(-6px) rotate(-0.4deg);
+    border-color: var(--coral);
+    box-shadow: 0 14px 28px rgba(45,74,62,0.12);
+  }
+  .tarjeta .icono{
+    width:74px; height:74px;
+    background:white;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.4rem;
+    margin-bottom:16px;
+    border:2px solid var(--linea);
+  }
+  .tarjeta h3{
+    font-size:1.25rem;
+    margin-bottom:4px;
+  }
+  .tarjeta .habitat{
+    font-size:0.8rem;
+    font-weight:700;
+    color:var(--coral);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-bottom:12px;
+    display:block;
+  }
+  .tarjeta p{
+    font-size:0.95rem;
+    color:#4a5749;
+    margin:0 0 14px;
+  }
+  .dato{
+    background:white;
+    border-radius:12px;
+    padding:10px 14px;
+    font-size:0.85rem;
+    border-left:4px solid var(--miel);
+    color:var(--verde-bosque);
+    font-weight:600;
+  }
+ 
+  /* ---------- Cierre / footer ---------- */
+  .cierre{
+    background:var(--crema);
+    border-top:2px dashed var(--linea);
+    margin-top:60px;
+    padding: 60px 6% 40px;
+    text-align:center;
+  }
+  .cierre h2{ font-size:1.8rem; }
+  .cierre p{ max-width:50ch; margin:14px auto 26px; color:#4a5749; }
+ 
+  footer{
+    text-align:center;
+    padding: 24px 6px 34px;
+    font-size:0.82rem;
+    color:#5c6a58;
+  }
+ 
+  @media (max-width: 760px){
+    .hero{ grid-template-columns:1fr; text-align:center; }
+    .hero p.lead{ margin-left:auto; margin-right:auto; }
+    .hero-cta{ justify-content:center; }
+    .medallon{ width:220px; height:220px; font-size:6rem; margin-top:20px; }
+    nav a{ margin-left:14px; font-size:0.85rem; }
+  }
+ 
+  @media (prefers-reduced-motion: reduce){
+    .medallon{ animation:none; }
+    .tarjeta, .btn{ transition:none; }
+  }
+ 
+  a:focus-visible, button:focus-visible{
+    outline: 3px solid var(--coral);
+    outline-offset: 2px;
+  }
+</style>
 </head>
 <body>
-
-    <!-- Encabezado y Navegación -->
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="brand-logo">Dev<span>Studio</span></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#inicio" class="active">Inicio</a></li>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-            </nav>
-            <button id="theme-toggle" class="btn btn-secondary">Modo Oscuro</button>
-        </div>
-    </header>
-
-    <!-- Sección Principal (Hero) -->
-    <main>
-        <section id="inicio" class="hero-section">
-            <div class="container hero-content">
-                <h1>Desarrollo Web de **Alto Nivel**</h1>
-                <p>Estructura profesional, código limpio, optimizado para SEO y diseñado para escalar.</p>
-                <div class="cta-buttons">
-                    <button id="cta-btn" class="btn btn-primary">Iniciar Proyecto</button>
-                    <a href="#servicios" class="btn btn-outline">Saber más</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Características -->
-        <section id="servicios" class="features-section container">
-            <article class="card">
-                <h3>⚡ Marca</h3>
-                <p>Optimizado para tiempos de carga ultrarrápidos y excelente puntuación en Core Web Vitals.</p>
-            </article>
-            <article class="card">
-                <h3>📱 Responsive</h3>
-                <p>Diseño adaptativo Mobile-First que luce perfecto en cualquier dispositivo.</p>
-            </article>
-            <article class="card">
-                <h3>🔒 Arquitectura</h3>
-                <p>Código modular, mantenible y basado en estándares web actualizados.</p>
-            </article>
-        </section>
-    </main>
-
-    <!-- Pie de Página -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 DevStudio Inc. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Scripts (Diferidos para no bloquear el renderizado) -->
-    <script src="js/main.js" defer></script>
+ 
+<div class="huellas" aria-hidden="true"></div>
+ 
+<header>
+  <div class="logo"><span class="paw">🐾</span> Amigos Salvajes</div>
+  <nav>
+    <a href="#galeria">Animales</a>
+    <a href="#datos">Datos</a>
+  </nav>
+</header>
+ 
+<section class="hero">
+  <div>
+    <span class="eyebrow">🌿 Guía ilustrada de fauna</span>
+    <h1>Conoce a los <em>habitantes</em> más curiosos del planeta</h1>
+    <p class="lead">Una colección de animales fascinantes, sus hogares y esa curiosidad que siempre sorprende en una charla de sobremesa.</p>
+    <div class="hero-cta">
+      <a href="#galeria" class="btn btn-primario">Explorar animales</a>
+      <a href="#datos" class="btn btn-secundario">Ver datos rápidos</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="medallon">🦊</div>
+    <div class="chip-flotante chip-1">+150 especies</div>
+    <div class="chip-flotante chip-2">6 continentes</div>
+  </div>
+</section>
+ 
+<div class="rastro" aria-hidden="true">
+  <span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span>
+</div>
+ 
+<div class="franja" id="datos">
+  <div class="franja-inner">
+    <div><strong>8.7M</strong><span>especies animales estimadas</span></div>
+    <div><strong>1.2M</strong><span>especies ya identificadas</span></div>
+    <div><strong>70%</strong><span>de la fauna vive en bosques</span></div>
+    <div><strong>24h</strong><span>de sueño de un koala al día</span></div>
+  </div>
+</div>
+ 
+<section class="seccion" id="galeria">
+  <div class="titulo-seccion">
+    <span class="eyebrow">🐾 Galería</span>
+    <h2>Un vistazo a sus mundos</h2>
+    <p>Ocho especies, ocho hogares distintos y un dato curioso de cada una para presumir en la próxima conversación.</p>
+  </div>
+ 
+  <div class="grid-animales">
+ 
+    <div class="tarjeta">
+      <div class="icono">🦁</div>
+      <h3>León</h3>
+      <span class="habitat">Sabana africana</span>
+      <p>Vive en manadas lideradas por hembras, que son quienes cazan la mayor parte del tiempo.</p>
+      <div class="dato">🔊 Su rugido se escucha hasta 8 km de distancia.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🐘</div>
+      <h3>Elefante africano</h3>
+      <span class="habitat">Praderas y bosques</span>
+      <p>El mamífero terrestre más grande del mundo, con una memoria excepcional para rutas y rostros.</p>
+      <div class="dato">🐘 Su trompa tiene más de 40,000 músculos.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🐼</div>
+      <h3>Panda gigante</h3>
+      <span class="habitat">Bosques de bambú, China</span>
+      <p>Dedica hasta 12 horas al día a comer bambú, su alimento casi exclusivo.</p>
+      <div class="dato">🎋 Come hasta 38 kg de bambú diarios.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🦉</div>
+      <h3>Búho nival</h3>
+      <span class="habitat">Tundra ártica</span>
+      <p>Cazador silencioso capaz de girar la cabeza casi 270 grados sin mover el cuerpo.</p>
+      <div class="dato">🌙 Puede cazar de día y de noche.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🦊</div>
+      <h3>Zorro rojo</h3>
+      <span class="habitat">Bosques templados</span>
+      <p>Extremadamente adaptable: vive tanto en zonas rurales como en el borde de grandes ciudades.</p>
+      <div class="dato">👂 Su oído detecta presas bajo la nieve.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🐬</div>
+      <h3>Delfín mular</h3>
+      <span class="habitat">Océanos templados y tropicales</span>
+      <p>Se comunica mediante silbidos únicos que funcionan casi como un nombre propio.</p>
+      <div class="dato">🧠 Duerme con la mitad del cerebro a la vez.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🦒</div>
+      <h3>Jirafa</h3>
+      <span class="habitat">Sabanas de África</span>
+      <p>El animal terrestre más alto, con un cuello que tiene la misma cantidad de vértebras que el nuestro.</p>
+      <div class="dato">💤 Duerme solo entre 30 minutos y 2 horas al día.</div>
+    </div>
+ 
+    <div class="tarjeta">
+      <div class="icono">🐨</div>
+      <h3>Koala</h3>
+      <span class="habitat">Bosques de eucalipto, Australia</span>
+      <p>Sus huellas dactilares son tan similares a las humanas que pueden confundirse en una escena.</p>
+      <div class="dato">🍃 Se alimenta casi solo de hojas de eucalipto.</div>
+    </div>
+ 
+  </div>
+</section>
+ 
+<div class="cierre">
+  <h2>🐾 Sigue explorando</h2>
+  <p>Cada especie tiene una historia distinta de adaptación. Este es solo el comienzo de un mundo enorme por descubrir.</p>
+  <a href="#galeria" class="btn btn-primario">Volver a la galería</a>
+</div>
+ 
+<footer>
+  Hecho con curiosidad por el mundo natural 🌎
+</footer>
+ 
 </body>
 </html>
